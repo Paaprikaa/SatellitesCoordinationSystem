@@ -15,26 +15,35 @@ class SatelliteList extends React.Component {
         this.setState({ satellites });
       })
   }
+  // 2006-03-24T22:30:00.000Z
+  parseDate(date) {
+    let res = date.substr(0,4)+"/"+date.substr(5,2)+"/"+date.substr(8,2);
+    return res; 
+  }
 
   render() {
     const satellites_info = (
-      <ul className="satellite-list">
+      <ul>
         {this.state.satellites.map(satellite =>
             <li>
-              Name: {satellite.name} - Date: {satellite.date_utc}. 
+              Satellite name: {satellite.name} 
+              <span className="toright">
+                Date of launch: {this.parseDate(satellite.date_utc)}
+              </span> 
             </li>
         )}
       </ul>
     );
 
     return (
-      <div className="container">
+      <div className="satellite-list-conteiner">
             {satellites_info}
       </div>
 
     );
   }
 }
+
 
 export default SatelliteList;
 

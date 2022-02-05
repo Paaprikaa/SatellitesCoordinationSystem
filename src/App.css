@@ -1,5 +1,20 @@
-/body {
-  background-color: lightblue;
+/* List of color palette: 
+  Dark low purple: #312f34, 
+  Sligthly brigther: #3b393e,
+  Almost white: #eeeee9
+*/
+
+/* Simple Animation */
+@keyframes title {
+  from {color: transparent;}
+  to {color: #eeeee9;}
+}
+
+/* Generals */
+body {
+ background-color: #312f34;
+ color: #eeeee9;
+ font-family: monospace;
 }
 
 .container {
@@ -7,12 +22,50 @@
   height: 100%;
 }
 
+/* Title */
 .title {
-  font-size: 4rem;
-  color: #eeeee9;
+  position: sticky;
+  top: 0;
+  height: 20%;
   background-color: #312f34;
 }
 
-.satellite-list {
+h1 {
+  font-size: 4rem;
+  color: #eeeee9;
+  text-align: center;
+  animation-name: title;
+  animation-duration: 6s;
+}
+/* List */
+.satellite-list-conteiner {
+  display: flex;
+  justify-content: center;
+}
+
+ul {
   background-color: transparent;
+  list-style-type: none;
+  width: 80%;
+}
+
+li {
+  margin: 2vh;
+  padding: 1%;
+  font-size: 1.5rem;
+  transition: transform 0.5s;
+  box-shadow: 0 5px 25px rgba(0,0,0,.1);
+  border-radius: 8px;
+  background-color: #3b393e;
+}
+
+li:hover {
+  transform:  scale(1.02);
+  z-index: 100;
+  box-shadow: 0 5px 25px rgba(0,0,0,.7);
+}
+
+.toright {
+  float: right;
+  padding-right: 20px;
 }
