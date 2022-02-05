@@ -1,7 +1,7 @@
 /* List of color palette: 
   Basic: #312f34, 
   Basic brighter: #3b393e,
-  Basic darker: #232127,
+  Basic darker: #232126,
   Almost white: #eeeee9
 */
 
@@ -27,6 +27,7 @@ body {
 
 /* Title */
 .title {
+  width: 100%;
   position: sticky;
   top: 0;
   height: 20%;
@@ -48,12 +49,18 @@ h1 {
   justify-content: center;
 }
 
-.search-bar {
+input[type=text] {
   width: 60%;
   height: 2em;
   font-size: 1.5vw;
   border-radius: 8px;
   padding-left: 1%;
+  transition: 0.5s;
+  outline: none
+}
+
+input[type=text]:focus {
+  border: 2px solid #232126;
 }
 
 .search-icon-container {
@@ -78,6 +85,8 @@ ul {
 }
 
 li {
+  display: table;
+  width: 100%;
   margin: 2vh;
   padding: 1%;
   font-size: 1.5vw;
@@ -93,7 +102,36 @@ li:hover {
   box-shadow: 0 5px 25px rgba(0,0,0,.7);
 }
 
-.toright {
-  float: right;
-  padding-right: 5%;
+p {
+  padding: 0%;
+  margin: 0%;
+  margin-top: 2%;
+}
+
+.left {
+  display: table-cell;
+}
+
+.right {
+  display: table-cell;
+  font-size: 2.5vw;
+  text-align: right;
+  padding-right: 2%;
+}
+
+/* checkbox por succesful launches */
+
+.checkbox-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 1%;
+  font-size: 2vw;
+}
+
+label {
+  padding-left: 2%;
+}
+
+input[type=checkbox] {
+
 }

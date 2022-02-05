@@ -3,7 +3,7 @@
 
 This project was made for a fellowship for https://imaginefellowships.com/ .
 
-For this project I use react with axios library and css.  
+For this project I use React with Axios library and CSS.  
 
 ### Project statement
 

@@ -9,7 +9,7 @@ function App() {
     <div>
       <div className="title">
         <h1> 
-        All satellite launches!
+        All satellite launches
         </h1>
       </div>
       <SatelliteList />
