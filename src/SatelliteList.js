@@ -5,6 +5,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons'
 /*import { faSearch } from '@fortawesome/free-solid-svg-icons'
 <FontAwesomeIcon icon={faSearch} className="search-icon"/>*/
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 class SatelliteList extends React.Component {
   constructor(props){
@@ -12,7 +14,8 @@ class SatelliteList extends React.Component {
     this.state = {
       satellites: [],
       showme: "",
-      successful: false
+      successful: false,
+      filterdate: (new Date("03/24/2006"))
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -78,12 +81,34 @@ class SatelliteList extends React.Component {
           <input type="text" placeholder="Search satellite name..." maxlength = "40"
             onChange={event => {this.setState({ showme: event.target.value })}}/>
         </div>
-        <form className="checkbox-container">
-          <input type="checkbox" id="show-successful" 
-              defaultChecked={this.state.successful} onChange={this.handleChange}
-            />
-          <label for="show-successful"> Show me only successful launches!</label>
-        </form>
+        <div className="col2-container">
+          <form className="checkbox-container">
+            <input type="checkbox" id="show-successful" 
+                defaultChecked={this.state.successful} onChange={this.handleChange}
+              />
+            <label for="show-successful"> Show me only successful launches!</label>
+          </form>
+            <div className="date-filter-containter">
+            <style>
+              { `.date-picker input {
+                display: inline-flex;
+                padding: 0;
+                border: 0;           
+                width: 100%;
+                background-color: #3b393e;
+                color: #eeeee9;
+              }`}
+              { `.date-picker {
+                width: 30%;
+              }`}
+            </style>
+
+            <span className="date-title">Search since:</span>
+            <DatePicker wrapperClassName="date-picker" 
+              selected={this.state.filterdate} onChange={(date) => this.setState({filterdate: date})} 
+              closeOnScroll={true} showYearDropdown yearDropdownItemNumber={15} scrollableYearDropdown />
+          </div>
+        </div>
         <div className="satellite-list-container">
           {satellitesInfo}
         </div>
