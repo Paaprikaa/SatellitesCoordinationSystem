@@ -31,14 +31,21 @@ class SatelliteList extends React.Component {
   /* When the checkbox is clicked, modified the "succesful" state */
   handleChange(event) {
     this.setState({ successful: !this.state.successful });
-    console.log("checkbox: "+ (this.state.successful));
+    console.log("dateeee: "+ this.parseDateCalendar(this.state.filterdate));
   }
   
   /* Parses the UTC-date to a more user friendly format (mm-dd-yy) */
-  parseDate(date) {
+  parseDateUTC(date) {
     let res = date.substr(5,2)+"/"+date.substr(8,2)+"/"+date.substr(0,4);
     return res; 
   }
+
+  parseDateCalendar(str) {
+  var date = new Date(str),
+    mnth = ("0" + (date.getMonth() + 1)).slice(-2),
+    day = ("0" + date.getDate()).slice(-2);
+  return [date.getFullYear(), mnth, day].join("/");
+}
 
   render() {
     const satellitesInfo = (
@@ -47,7 +54,8 @@ class SatelliteList extends React.Component {
           if (this.state.showme === "") {
             return satellite;
           } 
-          else if (satellite.name.toLowerCase().includes(this.state.showme.toLowerCase())) {
+          else if (satellite.name.toLowerCase()
+            .includes(this.state.showme.toLowerCase())) {
             return satellite;
           }
         }).filter((satellite) => {
@@ -56,12 +64,20 @@ class SatelliteList extends React.Component {
           } else if (satellite.success === true) {
             return satellite;
           }
+        }).filter(satellite => {
+          var inputdate = 
+            new Date(this.parseDateCalendar(this.state.filterdate));
+          var satdate = 
+            new Date(this.parseDateUTC(satellite.date_utc));
+          if(satdate.getTime() >= inputdate.getTime()){
+            return satellite;
+          }
         }).map(satellite =>  
           <li>
               <span className="left">
                 Satellite name: <b>{satellite.name} </b> 
               <p>
-                Date of launch: {this.parseDate(satellite.date_utc)}
+                Date of launch: {this.parseDateUTC(satellite.date_utc)}
               </p>
               </span>
               <span className="right">        
@@ -78,15 +94,21 @@ class SatelliteList extends React.Component {
     return (
       <div>
         <div className="search-bar-container">
-          <input type="text" placeholder="Search satellite name..." maxlength = "40"
-            onChange={event => {this.setState({ showme: event.target.value })}}/>
+          <input type="text" placeholder="Search satellite name..." 
+            maxlength = "40"
+            onChange={event => {
+              this.setState({ showme: event.target.value })
+            }}/>
         </div>
         <div className="col2-container">
           <form className="checkbox-container">
             <input type="checkbox" id="show-successful" 
-                defaultChecked={this.state.successful} onChange={this.handleChange}
+                defaultChecked={this.state.successful} 
+                onChange={this.handleChange}
               />
-            <label for="show-successful"> Show me only successful launches!</label>
+            <label for="show-successful">
+              Show me only successful launches!
+            </label>
           </form>
             <div className="date-filter-containter">
             <style>
@@ -105,8 +127,11 @@ class SatelliteList extends React.Component {
 
             <span className="date-title">Search since:</span>
             <DatePicker wrapperClassName="date-picker" 
-              selected={this.state.filterdate} onChange={(date) => this.setState({filterdate: date})} 
-              closeOnScroll={true} showYearDropdown yearDropdownItemNumber={15} scrollableYearDropdown />
+              selected={this.state.filterdate} 
+              onChange={(date) => this.setState({filterdate: date})} 
+              closeOnScroll={true} showYearDropdown 
+              yearDropdownItemNumber={15} scrollableYearDropdown
+              placeholderText="Select..." />
           </div>
         </div>
         <div className="satellite-list-container">
@@ -121,3 +146,6 @@ class SatelliteList extends React.Component {
 
 export default SatelliteList;
 
+/*
+
+*/
