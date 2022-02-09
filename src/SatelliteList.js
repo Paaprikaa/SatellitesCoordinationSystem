@@ -1,8 +1,8 @@
+// spacex satellite launch log
 import React from 'react';
 import axios from 'axios';
 import './App.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons'
+import Accordion from "./Accordion.js";
 /*import { faSearch } from '@fortawesome/free-solid-svg-icons'
 <FontAwesomeIcon icon={faSearch} className="search-icon"/>*/
 import DatePicker from "react-datepicker";
@@ -49,7 +49,7 @@ class SatelliteList extends React.Component {
 
   render() {
     const satellitesInfo = (
-      <ul>
+      <div className="satellite-list-container">
         {this.state.satellites.filter((satellite) => {
           if (this.state.showme === "") {
             return satellite;
@@ -73,22 +73,17 @@ class SatelliteList extends React.Component {
             return satellite;
           }
         }).map(satellite =>  
-          <li>
-              <span className="left">
-                Satellite name: <b>{satellite.name} </b> 
-              <p>
-                Date of launch: {this.parseDateUTC(satellite.date_utc)}
-              </p>
-              </span>
-              <span className="right">        
-              {satellite.success ? 
-                  (<FontAwesomeIcon icon={faCheck} />) 
-                : (<FontAwesomeIcon icon={faTimes} />)
-              }
-              </span>        
-         </li>
+          <Accordion
+            satName={satellite.name}
+            satDate={this.parseDateUTC(satellite.date_utc)}
+            satSuccess={satellite.success}
+            satDetails={satellite.details}
+            satYT={satellite.links.webcast}
+            satWiki={satellite.links.wikipedia} 
+            satArticle={satellite.links.article}   
+         />
         )}
-      </ul>
+      </div>
     );
 
     return (
@@ -107,7 +102,7 @@ class SatelliteList extends React.Component {
                 onChange={this.handleChange}
               />
             <label for="show-successful">
-              Show me only successful launches!
+              Successful launches
             </label>
           </form>
             <div className="date-filter-containter">
@@ -124,7 +119,6 @@ class SatelliteList extends React.Component {
                 width: 30%;
               }`}
             </style>
-
             <span className="date-title">Search since:</span>
             <DatePicker wrapperClassName="date-picker" 
               selected={this.state.filterdate} 
@@ -134,9 +128,7 @@ class SatelliteList extends React.Component {
               placeholderText="Select..." />
           </div>
         </div>
-        <div className="satellite-list-container">
-          {satellitesInfo}
-        </div>
+        {satellitesInfo}
       </div>
 
     );
