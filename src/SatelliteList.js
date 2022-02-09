@@ -2,9 +2,9 @@
 import React from 'react';
 import axios from 'axios';
 import './App.css';
-import Accordion from "./Accordion.js";
-/*import { faSearch } from '@fortawesome/free-solid-svg-icons'
-<FontAwesomeIcon icon={faSearch} className="search-icon"/>*/
+import Accordion from "./components/Accordion.js";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar } from '@fortawesome/free-solid-svg-icons'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -17,7 +17,6 @@ class SatelliteList extends React.Component {
       successful: false,
       filterdate: (new Date("03/24/2006"))
     };
-    this.handleChange = this.handleChange.bind(this);
   }
   /* Collects the data */
   componentDidMount() {
@@ -26,12 +25,6 @@ class SatelliteList extends React.Component {
         const info = res.data;
         this.setState({ satellites: info });
       })
-  }
-
-  /* When the checkbox is clicked, modified the "succesful" state */
-  handleChange(event) {
-    this.setState({ successful: !this.state.successful });
-    console.log("dateeee: "+ this.parseDateCalendar(this.state.filterdate));
   }
   
   /* Parses the UTC-date to a more user friendly format (mm-dd-yy) */
@@ -96,20 +89,24 @@ class SatelliteList extends React.Component {
             }}/>
         </div>
         <div className="col2-container">
-          <form className="checkbox-container">
-            <input type="checkbox" id="show-successful" 
-                defaultChecked={this.state.successful} 
-                onChange={this.handleChange}
-              />
-            <label for="show-successful">
-              Successful launches
-            </label>
-          </form>
+          <div className="checkbox-container">
+            <label>
+              <input type="checkbox" id="show-successful" 
+                  defaultChecked={this.state.successful}
+                  onChange={event => {
+                this.setState({ successful: !this.state.successful })
+              }}/>
+
+               <FontAwesomeIcon icon={faStar} className={`checkbox ${this.state.successful ? "checkbox--active": ""}`}
+                  aria-hidden="true"  />
+                <span style={{marginLeft: '2%'}}>Successful launches</span>
+              </label>
+            </div>
             <div className="date-filter-containter">
             <style>
               { `.date-picker input {
                 display: inline-flex;
-                padding: 0;
+                padding: 1%;
                 border: 0;           
                 width: 100%;
                 background-color: #3b393e;

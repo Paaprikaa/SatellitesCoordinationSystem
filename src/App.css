@@ -9,9 +9,14 @@
 */
 
 /* Simple Animation */
-@keyframes title {
+@keyframes on {
   from {color: transparent;}
   to {color: #eeeee9;}
+}
+
+@keyframes off {
+  from {color: #eeeee9;}
+  to {color: transparent;}
 }
 
 /* Generals */
@@ -44,11 +49,11 @@ h1 {
   font-size: 4rem;
   color: #eeeee9;
   text-align: center;
-  animation-name: title;
+  animation-name: on;
   animation-duration: 6s;
 }
 
-/* Search by name function */
+/* Search by name */
 
 .search-bar-container {
   display: flex;
@@ -64,10 +69,6 @@ input[type=text] {
   transition: 0.5s;
   outline: none
 }
-/*
-input[type=text]:focus {
-  border: 2px solid #232126;
-}*/
 
 .search-icon-container {
   width: 20%;
@@ -91,19 +92,6 @@ p {
   margin-top: 2%;
 }
 
-/* collapsible */
-
-.left {
-  display: table-cell;
-}
-
-.right {
-  display: table-cell;
-  font-size: 2.5vw;
-  text-align: right;
-  padding-right: 2%;
-}
-
 /* 2nd column  */
 .col2-container {
   display: flex;
@@ -114,20 +102,35 @@ p {
 /* checkbox por succesful launches */
 .checkbox-container {
   display: inline-block;
-  font-size: 2vw;
   margin-right: 3%;
   border-radius: 8px;
   background-color: #3b393e;
   padding: 0.5%;
   height: 2.4vw;
+  font-size: 2vw;
+  padding-right: 2%;
+  width: 27%;
 }
 
-label {
-  /*! padding-left: 2%; */
-  /*margin: ;*/
+.checkbox {
+  color: transparent;
 }
-input[type=checkbox] {
 
+.checkbox--active {
+  color: #eeeee9;
+  animation-name: on;
+  animation-duration: 2s;
+}
+
+/* Hides default checkbox */
+input[type="checkbox"] {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
 }
 
 /* date filter */
@@ -140,8 +143,5 @@ input[type=checkbox] {
 .date-title {
   display: inline-block;
   font-size: 2vw;
-}
-
-span {
   margin-right: 1%;
 }
