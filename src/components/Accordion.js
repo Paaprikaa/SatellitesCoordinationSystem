@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 
@@ -8,13 +8,7 @@ function Accordion(props) {
   const [setActive, setActiveState] = useState("");
   const [setHeight, setHeightState] = useState("0px");
   const content = useRef(null);
-
-  function toggleAccordion() {
-    setActiveState(setActive === "" ? "active" : "");
-    setHeightState(
-      setActive === "active" ? "0px" : `${content.current.scrollHeight}px` 
-    );
-  }
+  const isInitialMount = useRef(true);
 
   /* Ends the sentence correctly */
   function addFinalDot(str) {
@@ -25,28 +19,27 @@ function Accordion(props) {
     }
   }
 
-  return (
-   <div className="accordion__section">
-     <button className={`accordion ${setActive}`} onClick={toggleAccordion}>
-       <div className="accordion__title">
-          <span className="accordion__left-title">
-            Satellite name: <b>{props.satName}</b>
-            <p>
-              Date of launch: {props.satDate}
-            </p>   
-          </span>
-          <span className="accordion__right-title">
-            {props.satSuccess===null
-                  ? ("Unknown")
-                  : (props.satSuccess
-                      ? (<FontAwesomeIcon icon={faCheck} />)
-                      : (<FontAwesomeIcon icon={faTimes} />)
-                    )
-              }
-          </span>
-       </div>
-     </button>
-     <div 
+  /* shows/hiddes the extra data when activated/desactivated */
+  function toggleAccordion() {
+    setActiveState(setActive === "" ? "active" : "")
+    setHeightState(
+      setActive === "active" ? "0px" : `${content.current.scrollHeight}px` 
+    );
+  }
+
+  useEffect(() => {
+    if(isInitialMount.current) {
+      isInitialMount.current = false;
+    } else {
+      if (setActive === "active") {
+        toggleAccordion()
+      }
+    }
+  }, [props.satDetails]);
+
+/* More data of the satellite, only displays when clicked */
+  const accordionContent = (
+    <div 
       className="accordion__content" 
       ref={content}
       style={{ maxHeight : `${setHeight}`}} >
@@ -72,7 +65,30 @@ function Accordion(props) {
           : (<a href={props.satArticle}>{props.satArticle}</a>)
        } 
       </div>
-     </div>
+     </div>);
+
+  return (
+   <div className="accordion__section">
+     <button className={`accordion ${setActive}`} onClick={toggleAccordion}>
+       <div className="accordion__title">
+          <span className="accordion__left-title">
+            Satellite name: <b>{props.satName}</b>
+            <p>
+              Date of launch: {props.satDate}
+            </p>   
+          </span>
+          <span className="accordion__right-title">
+            {props.satSuccess===null
+                  ? ("Unknown")
+                  : (props.satSuccess
+                      ? (<FontAwesomeIcon icon={faCheck} />)
+                      : (<FontAwesomeIcon icon={faTimes} />)
+                    )
+              }
+          </span>
+       </div>
+     </button>
+      {accordionContent}
    </div>
  );
 }

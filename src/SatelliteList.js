@@ -1,4 +1,4 @@
-// spacex satellite launch log
+// Spacex Satellite Launch Log
 import React from 'react';
 import axios from 'axios';
 import './App.css';
@@ -13,9 +13,9 @@ class SatelliteList extends React.Component {
     super(props);
     this.state = {
       satellites: [],
-      showme: "",
-      successful: false,
-      filterdate: (new Date("03/24/2006"))
+      filtername: "",
+      filtersuccess: false,
+      filterdate: (new Date("03/24/2006")),
     };
   }
   /* Collects the data */
@@ -44,15 +44,15 @@ class SatelliteList extends React.Component {
     const satellitesInfo = (
       <div className="satellite-list-container">
         {this.state.satellites.filter((satellite) => {
-          if (this.state.showme === "") {
+          if (this.state.filtername === "") {
             return satellite;
           } 
           else if (satellite.name.toLowerCase()
-            .includes(this.state.showme.toLowerCase())) {
+            .includes(this.state.filtername.toLowerCase())) {
             return satellite;
           }
         }).filter((satellite) => {
-          if(!this.state.successful) {
+          if(!this.state.filtersuccess) {
             return satellite;
           } else if (satellite.success === true) {
             return satellite;
@@ -85,19 +85,19 @@ class SatelliteList extends React.Component {
           <input type="text" placeholder="Search satellite name..." 
             maxlength = "40"
             onChange={event => {
-              this.setState({ showme: event.target.value })
+              this.setState({ filtername: event.target.value, change:false })
             }}/>
         </div>
         <div className="col2-container">
           <div className="checkbox-container">
             <label>
-              <input type="checkbox" id="show-successful" 
-                  defaultChecked={this.state.successful}
+              <input type="checkbox" id="show-filtersuccess" 
+                  defaultChecked={this.state.filtersuccess}
                   onChange={event => {
-                this.setState({ successful: !this.state.successful })
+                this.setState({ filtersuccess: !this.state.filtersuccess })
               }}/>
 
-               <FontAwesomeIcon icon={faStar} className={`checkbox ${this.state.successful ? "checkbox--active": ""}`}
+               <FontAwesomeIcon icon={faStar} className={`checkbox ${this.state.filtersuccess ? "checkbox--active": ""}`}
                   aria-hidden="true"  />
                 <span style={{marginLeft: '2%'}}>Successful launches</span>
               </label>
@@ -136,5 +136,5 @@ class SatelliteList extends React.Component {
 export default SatelliteList;
 
 /*
-
+ SEARCH FOR useMemo AND useCallback!!!
 */
