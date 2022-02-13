@@ -15,24 +15,35 @@
   to {color: #eeeee9;}
 }
 
-@keyframes off {
-  from {color: #eeeee9;}
-  to {color: transparent;}
-}
-
 /* Generals */
 
+html { 
+  background: url('../public/stars-byPaaprikaa.png')no-repeat center center fixed;
+  background-color: #312f34;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  z-index: 10;
+  height: 100vh;
+  width: 100vw;
+  opacity: 95%;
+}
+
+
 body {
- background-color: #312f34;
- color: #eeeee9;
- font-family: 'Courier New', monospace;
- /*! width: 100%; */
- height: 100%;
+  color: #eeeee9;
+  font-family: 'Courier New', monospace;
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  overflow-x: hidden;
 }
 
 .container {
   width: 100%;
   height: 100%;
+  background-color: transparent;
 }
 
 
@@ -44,14 +55,19 @@ body {
   height: 20%;
   background-color: #312f34;
   z-index: 100;
+  padding-bottom: 3vh;
+  padding-top: 4vh;
+  margin: 0;
+  margin-bottom: 3%;
 }
 
 h1 {
-  font-size: 4rem;
+  font-size: 4.4rem;
   color: #eeeee9;
   text-align: center;
   animation-name: on;
   animation-duration: 6s;
+  margin: 0;
 }
 
 /* Search by name */
@@ -136,6 +152,7 @@ input[type="checkbox"] {
 
 /* date filter */
 .date-filter-containter {
+  z-index: 95;
   background-color: transparent;
   padding: 0.5%;
   width: 30%;

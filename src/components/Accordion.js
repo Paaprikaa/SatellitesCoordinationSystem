@@ -37,8 +37,28 @@ function Accordion(props) {
     }
   }, [props.satDetails]);
 
-/* More data of the satellite, only displays when clicked */
-  const accordionContent = (
+
+  return (
+   <div className="accordion__section">
+     <button className={`accordion ${setActive}`} onClick={toggleAccordion}>
+       <div className="accordion__title">
+          <span className="accordion__left-title">
+            Satellite name: <b>{props.satName}</b>
+            <p>
+              Date of launch: {props.satDate}
+            </p>   
+          </span>
+          <span className="accordion__right-title">
+            {props.satSuccess===null
+                  ? ("Unknown")
+                  : (props.satSuccess
+                      ? (<FontAwesomeIcon icon={faCheck} />)
+                      : (<FontAwesomeIcon icon={faTimes} />)
+                    )
+              }
+          </span>
+       </div>
+     </button>
     <div 
       className="accordion__content" 
       ref={content}
@@ -65,58 +85,10 @@ function Accordion(props) {
           : (<a href={props.satArticle}>{props.satArticle}</a>)
        } 
       </div>
-     </div>);
-
-  return (
-   <div className="accordion__section">
-     <button className={`accordion ${setActive}`} onClick={toggleAccordion}>
-       <div className="accordion__title">
-          <span className="accordion__left-title">
-            Satellite name: <b>{props.satName}</b>
-            <p>
-              Date of launch: {props.satDate}
-            </p>   
-          </span>
-          <span className="accordion__right-title">
-            {props.satSuccess===null
-                  ? ("Unknown")
-                  : (props.satSuccess
-                      ? (<FontAwesomeIcon icon={faCheck} />)
-                      : (<FontAwesomeIcon icon={faTimes} />)
-                    )
-              }
-          </span>
-       </div>
-     </button>
-      {accordionContent}
+     </div>
    </div>
  );
 }
 
 export default Accordion;
 
-/*
-<span className="left">
-                Satellite name: <b>{satellite.name} </b> 
-              <p>
-                Date of launch: {this.parseDateUTC(satellite.date_utc)}
-              </p>
-              </span>
-              <span className="right">        
-               {satellite.success===null
-                  ? ("Unknown")
-                  : (satellite.success
-                      ? (<FontAwesomeIcon icon={faCheck} />)
-                      : (<FontAwesomeIcon icon={faTimes} />)
-                    )
-              }
-              </span>
-
-*/
-
-/*
-<div
-         className="accordion__text"
-         dangerouslySetInnerHTML={{ __html: props.content }}
-       />
-*/
