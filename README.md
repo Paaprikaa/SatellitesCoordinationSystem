@@ -7,7 +7,7 @@ For this project I use React with Axios library and CSS.
 
 ### Project statement
 
-* Create a frontend UI that displays a list of all satellite launches. You can fetch the launch data at https://api.spacexdata.com/v5/launches/ .  
+* Create a frontend UI that displays a list of all satellite launches. You can fetch the launch data at https://api.spacexdata.com/v5/launches/ . 
 
 * Add ability for a user to search by satellite name.  
 
@@ -15,3 +15,8 @@ For this project I use React with Axios library and CSS.
 
 * Bonus: add a checkbox to allow users to select only successful launches.  
 
+### Instructions: 
+
+1. First install all project dependencies: npm install
+
+2. Then to start the project: npm start
