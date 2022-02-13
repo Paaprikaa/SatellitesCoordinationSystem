@@ -1,13 +1,11 @@
-
-/* List of color palette: 
-  Basic: #312f34, 
-  Basic brighter: #3b393e,
-  Basic darker: #242327,
-
-  Almost white: #eeeee9,
-
-  Lila: #524e5b;
+/*Color palette: 
+* Basic: #312f34, 
+* Basic brighter: #3b393e,
+* Basic darker: #242327,
+* Almost white: #eeeee9,
+* Lila: #524e5b;
 */
+
 
 /* Simple Animation */
 @keyframes on {
@@ -15,8 +13,8 @@
   to {color: #eeeee9;}
 }
 
-/* Generals */
 
+/* Generals */
 html { 
   background: url('../public/stars-byPaaprikaa.png')no-repeat center center fixed;
   background-color: #312f34;
@@ -30,7 +28,6 @@ html {
   opacity: 95%;
 }
 
-
 body {
   color: #eeeee9;
   font-family: 'Courier New', monospace;
@@ -38,12 +35,6 @@ body {
   padding: 0;
   width: 100vw;
   overflow-x: hidden;
-}
-
-.container {
-  width: 100%;
-  height: 100%;
-  background-color: transparent;
 }
 
 
@@ -70,8 +61,8 @@ h1 {
   margin: 0;
 }
 
-/* Search by name */
 
+/* Search by name */
 .search-bar-container {
   display: flex;
   justify-content: center;
@@ -87,15 +78,6 @@ input[type=text] {
   outline: none
 }
 
-.search-icon-container {
-  width: 20%;
-}
-
-.search-icon {
-  font-size: 4vw;
-  color: #eeeee9;
-  padding-right: 2%;
-}
 /* List */
 .satellite-list-container  {
   display: flex;
@@ -103,19 +85,15 @@ input[type=text] {
   background-color: transparent;
 }
 
-p {
-  padding: 0%;
-  margin: 0%;
-  margin-top: 2%;
-}
 
-/* 2nd column  */
-.col2-container {
+/* 2nd row  */
+.row2-container {
   display: flex;
   justify-content: center;
   margin-top: 3%;
   width: 100%;
 }
+
 /* checkbox por succesful launches */
 .checkbox-container {
   display: inline-block;
@@ -126,7 +104,7 @@ p {
   height: 2.4vw;
   font-size: 2vw;
   padding-right: 2%;
-  width: 27%;
+  width: 32%;
 }
 
 .checkbox {
@@ -151,7 +129,7 @@ input[type="checkbox"] {
 }
 
 /* date filter */
-.date-filter-containter {
+.date-filter-container {
   z-index: 95;
   background-color: transparent;
   padding: 0.5%;

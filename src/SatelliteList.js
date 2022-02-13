@@ -1,4 +1,3 @@
-// Spacex Satellite Launch Log
 import React from 'react';
 import axios from 'axios';
 import './App.css';
@@ -33,6 +32,7 @@ class SatelliteList extends React.Component {
     return res; 
   }
 
+  /* Parses the input data from the date filter */
   parseDateCalendar(str) {
   var date = new Date(str),
     mnth = ("0" + (date.getMonth() + 1)).slice(-2),
@@ -41,6 +41,7 @@ class SatelliteList extends React.Component {
 }
 
   render() {
+    /* SpaceX satellite list */
     const satellitesInfo = (
       <div className="satellite-list-container">
         {this.state.satellites.filter((satellite) => {
@@ -65,7 +66,13 @@ class SatelliteList extends React.Component {
           if(satdate.getTime() >= inputdate.getTime()){
             return satellite;
           }
-        }).map(satellite =>  
+        }).map(satellite =>  {
+          if (satellite.failures.length == 0) {
+            var fail = "none.";
+          } else {
+            var fail = satellite.failures[0].reason;
+          }
+          return (
           <Accordion
             satName={satellite.name}
             satDate={this.parseDateUTC(satellite.date_utc)}
@@ -73,9 +80,10 @@ class SatelliteList extends React.Component {
             satDetails={satellite.details}
             satYT={satellite.links.webcast}
             satWiki={satellite.links.wikipedia} 
-            satArticle={satellite.links.article}   
-         />
-        )}
+            satArticle={satellite.links.article}
+            satFailure={fail}
+         />);
+        })}
       </div>
     );
 
@@ -88,7 +96,7 @@ class SatelliteList extends React.Component {
               this.setState({ filtername: event.target.value, change:false })
             }}/>
         </div>
-        <div className="col2-container">
+        <div className="row2-container">
           <div className="checkbox-container">
             <label>
               <input type="checkbox" id="show-filtersuccess" 
@@ -99,10 +107,10 @@ class SatelliteList extends React.Component {
 
                <FontAwesomeIcon icon={faStar} className={`checkbox ${this.state.filtersuccess ? "checkbox--active": ""}`}
                   aria-hidden="true"  />
-                <span style={{marginLeft: '2%'}}>Successful launches</span>
+                <span style={{marginLeft: '2%'}}>Only successful launches</span>
               </label>
             </div>
-            <div className="date-filter-containter">
+            <div className="date-filter-container">
             <style>
               { `.date-picker input {
                 display: inline-flex;
@@ -135,6 +143,3 @@ class SatelliteList extends React.Component {
 
 export default SatelliteList;
 
-/*
- SEARCH FOR useMemo AND useCallback!!!
-*/

@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './App.css';
 import SatelliteList from './SatelliteList.js';
 
 function App() {
+  document.title = "SpaceX Satellite Launch Log";
 
   return (
     <div>

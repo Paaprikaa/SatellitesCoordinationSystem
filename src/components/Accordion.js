@@ -69,6 +69,8 @@ function Accordion(props) {
           ? ("none.")
           : (addFinalDot(props.satDetails))
        } <br />
+       <b>Failure: </b> {addFinalDot(props.satFailure)}
+        <br />
        <b>See the launch here: </b>
        {props.satYT===null
           ? ("none.")
@@ -92,3 +94,6 @@ function Accordion(props) {
 
 export default Accordion;
 
+/*
+
+*/
