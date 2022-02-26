@@ -6,15 +6,19 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 class SatelliteList extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      satellites: [],
+      allsatellites: [],
       filtername: "",
       filtersuccess: false,
       filterdate: (new Date("03/24/2006")),
+      page: 0,
+      satellites: [],
+      moreData: true,
     };
   }
   /* Collects the data */
@@ -22,7 +26,8 @@ class SatelliteList extends React.Component {
     axios.get(`https://api.spacexdata.com/v5/launches/`)
       .then(res => {
         const info = res.data;
-        this.setState({ satellites: info });
+        this.setState({ allsatellites: info });
+        this.setState({ satellites: this.state.allsatellites.slice(0,10) });
       })
   }
   
@@ -37,12 +42,29 @@ class SatelliteList extends React.Component {
   var date = new Date(str),
     mnth = ("0" + (date.getMonth() + 1)).slice(-2),
     day = ("0" + date.getDate()).slice(-2);
-  return [date.getFullYear(), mnth, day].join("/");
-}
+    return [date.getFullYear(), mnth, day].join("/");
+  }
+
+  /* Function called when reach the bottom of the page and there is more information to show 
+  */
+  fetchData = () => {
+    console.log(`enter ${this.state.page} ${this.state.satellites.length}`);
+    this.setState({
+        satellites: 
+          this.state.satellites.concat(this.state.allsatellites.slice(10+this.state.page,20+this.state.page))
+      });
+    this.setState((state) => {
+      return { page: state.page + 10 }
+    });
+    if (this.state.page/10 >= Math.trunc((this.state.allsatellites.length)/10)) {
+      this.setState({ moreData: false });
+    }
+    console.log(`exit ${this.state.page} ${this.state.satellites.length} ${this.state.moreData}`);
+  }
 
   render() {
     /* SpaceX satellite list */
-    const satellitesInfo = (
+    var satellitesInfo = (
       <div className="satellite-list-container">
         {this.state.satellites.filter((satellite) => {
           if (this.state.filtername === "") {
@@ -133,7 +155,19 @@ class SatelliteList extends React.Component {
               placeholderText="Select..." />
           </div>
         </div>
+        <InfiniteScroll
+          dataLength={this.state.satellites.length} 
+          next={this.fetchData}
+          hasMore={this.state.moreData}
+          loader={<h4 style={{ textAlign: 'center' }}>Loading...</h4>}
+          endMessage={
+            <p style={{ textAlign: 'center' }}>
+              <b>You have seen it all!</b>
+            </p>
+          }
+        >
         {satellitesInfo}
+        </InfiniteScroll>
       </div>
 
     );
